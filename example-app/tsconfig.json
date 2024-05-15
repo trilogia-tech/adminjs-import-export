@@ -1,20 +1,27 @@
 {
   "compilerOptions": {
-    "jsx": "preserve",
-    "baseUrl": "./",
-    "outDir": "./dist",
-    "target": "esnext",
+    "jsx": "react",
     "module": "nodenext",
     "moduleResolution": "nodenext",
-    "esModuleInterop": true,
-    "strictNullChecks": true,
-    "strictPropertyInitialization": false,
-    "strictFunctionTypes": true,
-    "strictBindCallApply": true,
-    "noImplicitThis": true,
+    "target": "ES2021",
+    "declaration": false,
+    "removeComments": true,
+    "emitDecoratorMetadata": false,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "skipLibCheck": true
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "sourceMap": false,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
   },
-  "include": ["./src/**/*.ts", "../src/**/*"]
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "**/src/**/*"
+  ]
 }

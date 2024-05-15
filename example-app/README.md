@@ -1,32 +1,17 @@
+1. created with @adminjs/cli. choose `fastify` adapter, then `sequelize` database adapter, then `postgres` database client
+
+2. setted devdependencies to
+
+```json
 {
-  "name": "example-app",
-  "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "build": "tsc",
-    "lint": "eslint './src/**/*'",
-    "start": "dotenvx run -- node dist/app"
-  },
-  "dependencies": {
-    "@adminjs/fastify": "^4.1.2",
-    "@adminjs/sql": "^2.2.3",
-    "@fastify/session": "^10.8.0",
-    "@trilogia/adminjs-import-export": "link:..",
-    "adminjs": "^7.8.1",
-    "fastify": "^4.27.0",
-    "pg": "latest",
-    "sequelize": ">=6"
-  },
   "devDependencies": {
     "@dotenvx/dotenvx": "^0.39.0",
-    "@eslint/eslintrc": "^3.0.2",
     "@eslint/js": "^9.2.0",
     "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
     "@types/node": "^20.12.12",
     "@typescript-eslint/eslint-plugin": "^7.9.0",
     "@typescript-eslint/parser": "^7.9.0",
-    "eslint": "8.57.0",
+    "eslint": "^9.2.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-prettier": "^5.1.3",
@@ -36,6 +21,6 @@
     "sequelize-cli": "^6.6.2",
     "typescript": "^5.4.5",
     "typescript-eslint": "^7.9.0"
-  },
-  "packageManager": "yarn@4.2.2"
+  }
 }
+```
