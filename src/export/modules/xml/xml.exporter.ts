@@ -2,7 +2,8 @@ import { BaseRecord } from 'adminjs'
 import xml from 'xml'
 
 export const xmlExporter = (records: BaseRecord[]): string => {
-  const data = records
+  const recs = records ?? []
+  const data = recs
     .filter((r) => r!)
     .map((record) => ({
       record: Object.entries(record.params).map(([key, value]) => ({

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { buildFeature, ComponentLoader, FeatureType } from 'adminjs'
 import { bundleComponent } from './bundle-component.js'
 import { importHandler } from './import.handler.js'

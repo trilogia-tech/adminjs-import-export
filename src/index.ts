@@ -7,5 +7,6 @@ import importExportFeature from './importExportFeature.js'
  */
 
 export { exportFeature } from './export/index.js'
-
 export * from './bundle-component.js'
+
+export type * from './export/export.options.type.js'

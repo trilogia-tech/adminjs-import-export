@@ -1,31 +1,4 @@
-import { ActionContext, ActionHandler, ActionRequest, ActionResponse, BaseRecord, Filter, RecordActionResponse, ValidationError } from 'adminjs'
-
-
-
-export const postResourceActionHandler =
-  (handler: ActionHandler<ActionResponse>): ActionHandler<ActionResponse> =>
-  async (request, response, context) => {
-    if (request.method !== 'post') {
-      return {}
-    }
-
-    return handler(request, response, context)
-  }
-
-export const postRecordActionHandler =
-  (handler: ActionHandler<RecordActionResponse>): ActionHandler<RecordActionResponse> =>
-  async (request, response, context) => {
-    const { record } = context
-    if (!record) throw new Error(`Record of given id ("${request.params.recordId}") could not be found`)
-
-    if (request.method !== 'post') {
-      return {
-        record: record.toJSON(context.currentAdmin)
-      }
-    }
-
-    return handler(request, response, context)
-  }
+import { ActionContext, ActionRequest, BaseRecord, Filter, ValidationError } from 'adminjs'
 
 export const getFileFromRequest = (request: ActionRequest) => {
   const file = request.payload?.file

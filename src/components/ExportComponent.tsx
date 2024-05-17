@@ -1,10 +1,12 @@
-import { FC, useState } from 'react'
+import React, { FC, useState } from 'react'
 import { Box, Button, Loader, Text } from '@adminjs/design-system'
 import { ActionProps, ActionResponse, ApiClient, RecordActionResponse, useNotice, useTranslation } from 'adminjs'
 import { AxiosResponse } from 'axios'
 import { format } from 'date-fns'
-import { saveAs } from 'file-saver'
-import { Exporters, ExporterType } from 'src/export/export.type.js'
+import fileSaver from 'file-saver'
+import { Exporters, ExporterType } from '../export/export.type.js'
+
+const { saveAs } = fileSaver
 
 export const mimeTypes: Record<ExporterType, string> = {
   json: 'application/json',

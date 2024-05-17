@@ -1,20 +1,20 @@
-import { ActionContext, ActionHandler, ActionRequest, ActionResponse, BaseRecord, BaseResource, Filter, ValidationError } from 'adminjs'
+import { ActionContext, ActionHandler, ActionRequest, ActionResponse, BaseRecord, BaseResource, Filter, ParamsType, ValidationError } from 'adminjs'
 import { csvImporter } from './modules/csv/csv.importer.js'
 import { jsonImporter } from './modules/json/json.importer.js'
 import { xmlImporter } from './modules/xml/xml.importer.js'
 import { Importer } from './parsers.js'
 
 export const saveRecords = async (records: Record<string, unknown>[], resource: BaseResource): Promise<BaseRecord[]> => {
-  return Promise.all(
-    records.map(async (record) => {
-      try {
-        return await resource.create(record)
-      } catch (e) {
-        console.error(e)
-        return e
-      }
-    })
-  )
+  const results = records.map(async (record) => {
+    try {
+      return await resource.create(record)
+    } catch (e) {
+      console.error(e)
+      throw e
+    }
+  })
+
+  return Promise.all(results.map((r) => new BaseRecord(r, resource)))
 }
 
 export const getImporterByFileName = (fileName: string): Importer => {

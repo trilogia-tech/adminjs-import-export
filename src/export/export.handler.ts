@@ -1,11 +1,17 @@
 import { ActionHandler, ActionResponse, buildFeature, FeatureType, RecordActionResponse } from 'adminjs'
-import { bundleComponent } from 'src/bundle-component.js'
-import ExportComponent from 'src/components/ExportComponent.jsx'
-import { exportRecordHandlerFactory, exportResourceHandlerFactory } from './export.handler.factory.js'
+import { bundleComponent } from '../bundle-component.js'
+import ExportComponent from '../components/ExportComponent.js'
+import { exportBulkHandlerFactory, exportRecordHandlerFactory, exportResourceHandlerFactory } from './export.handler.factory.js'
 import { defaultOptions } from './export.options.default.js'
 import { ExportOptions } from './export.options.type.js'
-import { postRecordActionHandler, postResourceActionHandler } from './export.utils.js'
 
+/**
+ * Exports a feature with the given options.
+ *
+ * @param options - The export options.
+ * @returns The exported feature.
+ * @throws Error if the handler or component is not defined.
+ */
 export const exportFeature = (options: ExportOptions): FeatureType => {
   const opts = Object.assign({}, defaultOptions, options)
   const { componentLoader } = opts
@@ -13,22 +19,28 @@ export const exportFeature = (options: ExportOptions): FeatureType => {
 
   let handler: undefined | ActionHandler<ActionResponse | RecordActionResponse>
 
-  if (opts?.isVisible) {
-    const component = bundleComponent(componentLoader, ExportComponent.name)
+  const component = bundleComponent(componentLoader, ExportComponent.name)
 
-    if (opts.type === 'resource') {
-      handler = postResourceActionHandler(exportResourceHandlerFactory(opts))
-    }
-    if (opts.type === 'record') {
-      handler = postRecordActionHandler(exportRecordHandlerFactory(opts))
-    }
-    if (!handler) throw new Error('Handler is not defined')
+  if (opts.actionType === 'resource') {
+    handler = exportResourceHandlerFactory(opts)
+  }
+  if (opts.actionType === 'record') {
+    handler = exportRecordHandlerFactory(opts)
+  }
+  if (opts.actionType === 'bulk') {
+    handler = exportBulkHandlerFactory(opts)
+  }
 
-    actions['export'] = {
-      handler: handler,
-      component: component,
-      actionType: opts.type
-    }
+  if (!handler) throw new Error('Handler is not defined')
+  if (!component) throw new Error('Component is not defined')
+
+  actions['export'] = {
+    component: component,
+    handler: handler,
+    actionType: opts.actionType,
+    isVisible: opts.isVisible,
+    isAccessible: opts.isAccessible,
+    icon: opts.icon
   }
 
   return buildFeature({

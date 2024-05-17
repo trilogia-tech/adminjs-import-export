@@ -29,7 +29,7 @@ const ImportComponent: FC<ActionProps> = ({ resource }) => {
 
       sendNotice({ message: 'Imported successfully', type: 'success' })
     } catch (e) {
-      sendNotice({ message: e.message, type: 'error' })
+      sendNotice({ message: 'error', type: 'error' })
     }
     setFetching(false)
   }

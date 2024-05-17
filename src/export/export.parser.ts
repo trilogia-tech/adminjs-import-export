@@ -6,7 +6,11 @@ import { xmlExporter } from './modules/xml/xml.exporter.js'
 
 export type Exporter = (records: BaseRecord[]) => string
 
-export const Parsers: Record<ExporterType, { export: Exporter }> = {
+export type ExporterWrapper = {
+  export: Exporter
+}
+
+export const Parsers: Record<ExporterType, ExporterWrapper> = {
   json: { export: jsonExporter },
   csv: { export: csvExporter },
   xml: { export: xmlExporter }

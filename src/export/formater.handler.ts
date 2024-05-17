@@ -32,7 +32,7 @@ export const formatRecords = (records: BaseRecord[], columns: Column[]) => {
       if (column.concat?.key) formattedParams[column.name] = formatConcatKey(record, column)
     })
 
-    return { params: formattedParams }
+    return new BaseRecord(formattedParams, record.resource)
   })
 
   return formattedRecords

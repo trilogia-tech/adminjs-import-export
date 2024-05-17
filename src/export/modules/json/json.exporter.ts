@@ -1,5 +1,6 @@
 import { BaseRecord } from 'adminjs'
 
 export const jsonExporter = (records: BaseRecord[]): string => {
-  return JSON.stringify(records.filter((r) => !!r).map((r) => r.params))
+  const recs = records ?? []
+  return JSON.stringify(recs.filter((r) => !!r).map((r) => r.params))
 }
