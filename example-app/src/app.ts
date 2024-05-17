@@ -10,6 +10,10 @@ const port = process.env.PORT ? +process.env.PORT : 3000
 const start = async () => {
   const server = Fastify()
   const db = await databaseFactory()
+  if (!db) {
+    console.error('Database connection failed')
+    process.exit(1)
+  }
   const options = optionsFactory(db)
   const admin = new AdminJS(options)
 
@@ -22,7 +26,7 @@ const start = async () => {
   await AdminJSFastify.buildAuthenticatedRouter(
     admin,
     {
-      cookiePassword: process.env.COOKIE_SECRET,
+      cookiePassword: process.env.COOKIE_SECRET || 'secret',
       cookieName: 'adminjs',
       provider
     },

@@ -24,3 +24,8 @@
   }
 }
 ```
+
+3. Added a sample of each kind of export feature
+- export a resource: /src/db/models/user.ts
+- export a record: /src/db/models/role.ts
+- export many records: /src/db/models/permission.ts

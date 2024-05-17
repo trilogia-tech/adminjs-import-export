@@ -1,27 +1,24 @@
 {
   "compilerOptions": {
-    "jsx": "react",
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
-    "target": "ES2021",
-    "declaration": false,
-    "removeComments": true,
-    "emitDecoratorMetadata": false,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
     "allowJs": true,
-    "sourceMap": false,
-    "outDir": "./dist",
-    "baseUrl": "./",
-    "incremental": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "declaration": false,
+    "emitDecoratorMetadata": true,
     "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "incremental": true,
+    "jsx": "react",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "noImplicitAny": false,
+    "outDir": "./dist",
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "es2021"
   },
-  "exclude": [
-    "node_modules"
-  ],
-  "include": [
-    "**/src/**/*"
-  ]
+  "exclude": ["node_modules"],
+  "include": ["**/src/**/*"]
 }

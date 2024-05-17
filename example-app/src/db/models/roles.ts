@@ -1,15 +1,14 @@
 import { exportFeature } from '@trilogia/adminjs-import-export'
-import { ActionContext, BaseRecord, Filter, ResourceWithOptions } from 'adminjs'
-import { ResourceFactoryOptions } from 'src/admin/options.js'
+import { ActionContext, BaseRecord, ResourceWithOptions } from 'adminjs'
+import { ResourceFactoryOptions } from '../../admin/options.js'
 
 const RESOURCE_NAME = 'roles'
 export const CreateRoleResource = (opts: ResourceFactoryOptions): ResourceWithOptions => ({
   resource: opts.database.table('roles'),
   features: [
     exportFeature({
-      type: 'record',
+      actionType: 'record',
       componentLoader: opts.componentLoader,
-      isVisible: true,
       columns: columnsToExport,
       getRecords: getRecordsToExport
     })
@@ -28,30 +27,9 @@ const getRecordsToExport: (context: ActionContext) => Promise<BaseRecord[]> = as
   if (!context.record) throw new Error(`Record could not be found`)
 
   const resource = context._admin.findResource(RESOURCE_NAME)
-  const resourceDecorated = resource.decorate()
 
-  const idProperty = resource
-    .properties()
-    .find((p) => p.isId())
-    ?.name?.()
+  const record = await resource.findOne(context.record.id())
+  if (!record) throw new Error(`Record could not be found`)
 
-  const titleProperty = resourceDecorated.titleProperty()?.name?.()
-
-  const records = await resource.find(
-    new Filter(
-      {
-        collection_id: context.record.id()
-      },
-      resource
-    ),
-    {
-      limit: Number.MAX_SAFE_INTEGER,
-      sort: {
-        sortBy: idProperty ?? titleProperty,
-        direction: 'asc'
-      }
-    }
-  )
-
-  return records
+  return [record]
 }

@@ -9,11 +9,8 @@ const provider = new DefaultAuthProvider({
   componentLoader,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   authenticate: async ({ email, password }) => {
-    if (email === DEFAULT_ADMIN.email) {
-      return { email }
-    }
-
-    return null
+    // fake auth
+    return { email: DEFAULT_ADMIN.email }
   }
 })
 

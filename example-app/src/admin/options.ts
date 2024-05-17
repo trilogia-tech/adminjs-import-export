@@ -1,7 +1,8 @@
 import { DatabaseMetadata } from '@adminjs/sql'
 import { AdminJSOptions, ComponentLoader } from 'adminjs'
-import { CreateRoleResource } from 'src/db/models/roles.js'
-import { CreateUserResource } from 'src/db/models/users.js'
+import { CreatePermissionResource } from '../db/models/permissions.js'
+import { CreateRoleResource } from '../db/models/roles.js'
+import { CreateUserResource } from '../db/models/users.js'
 import componentLoader from './component-loader.js'
 
 export type ResourceFactoryOptions = {
@@ -9,17 +10,11 @@ export type ResourceFactoryOptions = {
   database: DatabaseMetadata
 }
 
-export default (database: DatabaseMetadata): AdminJSOptions => ({
-  componentLoader,
-  rootPath: '/admin',
-  resources: [
-    CreateUserResource({
-      database,
-      componentLoader
-    }),
-    CreateRoleResource({
-      database,
-      componentLoader
-    })
-  ]
-})
+export default (database: DatabaseMetadata): AdminJSOptions => {
+  const resources = [CreateUserResource, CreateRoleResource, CreatePermissionResource].map((fn) => fn({ database, componentLoader }))
+  return {
+    componentLoader,
+    rootPath: '/admin',
+    resources
+  }
+}

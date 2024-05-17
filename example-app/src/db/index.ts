@@ -8,7 +8,7 @@ AdminJS.registerAdapter({
 
 const adapter = new Adapter('postgresql', {
   connectionString: process.env.POSTGRES_URI,
-  database: process.env.POSTGRES_DB
+  database: process.env.POSTGRES_DB || 'postgres'
 })
 
 const initialize = async () => {
