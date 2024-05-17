@@ -1,72 +1,54 @@
-import React, { FC, useState } from 'react';
-import { ActionProps, ApiClient, useNotice } from 'adminjs';
-import {
-  DropZoneItem,
-  Loader,
-  Box,
-  Button,
-  DropZone,
-} from '@adminjs/design-system';
+import React, { FC, useState } from 'react'
+import { Box, Button, DropZone, DropZoneItem, Loader } from '@adminjs/design-system'
+import { ActionProps, ApiClient, useNotice } from 'adminjs'
 
 const ImportComponent: FC<ActionProps> = ({ resource }) => {
-  const [file, setFile] = useState<null | File>(null);
-  const sendNotice = useNotice();
-  const [isFetching, setFetching] = useState<boolean>();
+  const [file, setFile] = useState<null | File>(null)
+  const sendNotice = useNotice()
+  const [isFetching, setFetching] = useState<boolean>()
 
   const onUpload = (uploadedFile: File[]) => {
-    setFile(uploadedFile?.[0] ?? null);
-  };
+    setFile(uploadedFile?.[0] ?? null)
+  }
 
   const onSubmit = async () => {
     if (!file) {
-      return;
+      return
     }
 
-    setFetching(true);
+    setFetching(true)
     try {
-      const importData = new FormData();
-      importData.append('file', file, file?.name);
+      const importData = new FormData()
+      importData.append('file', file, file?.name)
       await new ApiClient().resourceAction({
         method: 'post',
         resourceId: resource.id,
         actionName: 'import',
-        data: importData,
-      });
+        data: importData
+      })
 
-      sendNotice({ message: 'Imported successfully', type: 'success' });
+      sendNotice({ message: 'Imported successfully', type: 'success' })
     } catch (e) {
-      sendNotice({ message: e.message, type: 'error' });
+      sendNotice({ message: 'error', type: 'error' })
     }
-    setFetching(false);
-  };
+    setFetching(false)
+  }
 
   if (isFetching) {
-    return <Loader />;
+    return <Loader />
   }
 
   return (
-    <Box
-      margin="auto"
-      maxWidth={600}
-      display="flex"
-      justifyContent="center"
-      flexDirection="column"
-    >
+    <Box margin='auto' maxWidth={600} display='flex' justifyContent='center' flexDirection='column'>
       <DropZone files={[]} onChange={onUpload} multiple={false} />
-      {file && (
-        <DropZoneItem
-          file={file}
-          filename={file.name}
-          onRemove={() => setFile(null)}
-        />
-      )}
-      <Box display="flex" justifyContent="center" m={10}>
+      {file && <DropZoneItem file={file} filename={file.name} onRemove={() => setFile(null)} />}
+      <Box display='flex' justifyContent='center' m={10}>
         <Button onClick={onSubmit} disabled={!file || isFetching}>
           Upload
         </Button>
       </Box>
     </Box>
-  );
-};
+  )
+}
 
-export default ImportComponent;
+export default ImportComponent

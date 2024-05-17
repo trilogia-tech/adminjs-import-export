@@ -1,5 +1,5 @@
-import { BaseRecord } from 'adminjs';
+import { BaseRecord } from 'adminjs'
 
 export const jsonExporter = (records: BaseRecord[]): string => {
-  return JSON.stringify(records.map(r => r.params));
-};
+  return JSON.stringify(records.map((r) => r.params))
+}

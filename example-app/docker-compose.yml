@@ -1,13 +1,23 @@
-version: '3.7'
-
 services:
-  adminjs-import-export:
-    container_name: adminjs-import-export
-    image: mongo
+  database:
+    image: postgres:16-alpine
+    container_name: database
+    hostname: database
+    env_file:
+      - .env
     ports:
-      - "27017:27017"
+      - "5432:5432"
     volumes:
-      - adminjs-import-export:/data/db
-
-volumes:
-  adminjs-import-export:
+      - ./scripts:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "user", "-d", "postgres"]
+      interval: 10s
+      timeout: 3s
+      retries: 20
+      start_period: 10s
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 2s
+        max_attempts: 5
+        window: 20s

@@ -1,11 +1,12 @@
+import importExportFeature from './importExportFeature.js'
+
 /**
  * @module @adminjs/import-export
  * @subcategory Features
  * @section modules
  */
 
-import importExportFeature from './importExportFeature.js';
+export { exportFeature } from './export/index.js'
+export * from './bundle-component.js'
 
-export * from './bundle-component.js';
-
-export default importExportFeature;
+export type * from './export/export.options.type.js'
